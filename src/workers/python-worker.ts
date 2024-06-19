@@ -4,7 +4,7 @@ interface Pyodide {
   loadPackage: (packages: string[]) => Promise<void>
   pyimport: (pkg: string) => micropip
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  runPythonAsync: (code: string, namespace?: any) => Promise<any>
+  runPythonAsync: (code: string, namespace?: any) => Promise<void>
   version: string
   FS: {
     readFile: (name: string, options: unknown) => void
@@ -56,9 +56,7 @@ const reactPyModule = {
 
 const python = {
   async init(
-    stdout: {
-      stdout?: (msg: string) => void
-    },
+    stdout: (msg: string) => void,
     onLoad: ({
       id,
       version,
