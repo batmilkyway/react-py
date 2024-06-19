@@ -21,7 +21,7 @@ export interface Runner {
 
 export interface PythonRunner extends Runner {
   run: (code: string) => Promise<any>
-  runSync: (code: string) => any
+  runSync: (code: string) => Promise<any>
 }
 
 export interface PythonConsoleRunner extends Runner {
