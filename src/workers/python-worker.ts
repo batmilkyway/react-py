@@ -4,7 +4,7 @@ interface Pyodide {
   loadPackage: (packages: string[]) => Promise<void>
   pyimport: (pkg: string) => micropip
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  runPythonAsync: (code: string, namespace?: any) => Promise<void>
+  runPythonAsync: (code: string, namespace?: any) => Promise<any>
   runPython: (code: string, namespace?: any) => any
   version: string
   FS: {
