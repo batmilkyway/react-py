@@ -180,7 +180,7 @@ del sys
 `
 
   const runPython = useCallback(
-    async (code: string, preamble = '') => {
+    async (code: string, preamble = ''): Promise<any> => {
       // Clear stdout and stderr
       setStdout('')
       setStderr('')
@@ -218,7 +218,8 @@ del sys
         if (watchedModules.size > 0) {
           await runnerRef.current.run(moduleReloadCode(watchedModules))
         }
-        await runnerRef.current.run(code)
+        const result = await runnerRef.current.run(code)
+        return result
         // eslint-disable-next-line
       } catch (error: any) {
         setStderr('Traceback (most recent call last):\n' + error.message)
