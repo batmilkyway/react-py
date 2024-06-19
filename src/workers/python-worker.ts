@@ -5,6 +5,7 @@ interface Pyodide {
   pyimport: (pkg: string) => micropip
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   runPythonAsync: (code: string, namespace?: any) => Promise<void>
+  runPython: (code: string, namespace?: any) => any
   version: string
   FS: {
     readFile: (name: string, options: unknown) => void
