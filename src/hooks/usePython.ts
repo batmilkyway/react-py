@@ -230,57 +230,7 @@ del sys
     },
     [lazy, isReady, timeout, watchedModules]
   )
-  const runPythonSync = useCallback(
-    async (code: string, preamble = ''): Promise<any> => {
-      // Clear stdout and stderr
-      setStdout('')
-      setStderr('')
-
-      if (lazy && !isReady) {
-        // Spawn worker and set pending code
-        createWorker()
-        setPendingCode(code)
-        return
-      }
-
-      code = `${pythonRunnerCode}\n\nrun(${JSON.stringify(
-        code
-      )}, ${JSON.stringify(preamble)})`
-
-      if (!isReady) {
-        throw new Error('Pyodide is not loaded yet')
-      }
-      let timeoutTimer
-      try {
-        setIsRunning(true)
-        setHasRun(true)
-        // Clear output
-        setOutput([])
-        if (!isReady || !runnerRef.current) {
-          throw new Error('Pyodide is not loaded yet')
-        }
-        if (timeout > 0) {
-          timeoutTimer = setTimeout(() => {
-            setStdout('')
-            setStderr(`Execution timed out. Reached limit of ${timeout} ms.`)
-            interruptExecution()
-          }, timeout)
-        }
-        if (watchedModules.size > 0) {
-          await runnerRef.current.runSync(moduleReloadCode(watchedModules))
-        }
-        const result = await runnerRef.current.runSync(code)
-        return result
-        // eslint-disable-next-line
-      } catch (error: any) {
-        setStderr('Traceback (most recent call last):\n' + error.message)
-      } finally {
-        setIsRunning(false)
-        clearTimeout(timeoutTimer)
-      }
-    },
-    [lazy, isReady, timeout, watchedModules]
-  )
+  
 
   const interruptExecution = () => {
     cleanup()
@@ -313,7 +263,6 @@ del sys
 
   return {
     runPython,
-    runPythonSync,
     stdout,
     stderr,
     isLoading,
