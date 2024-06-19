@@ -26,7 +26,11 @@ interface micropip {
 
 declare global {
   interface Window {
-    loadPyodide: (stdout: (msg: string) => void) => Promise<Pyodide>
+    loadPyodide: ({
+      stdout
+    }: {
+      stdout?: (msg: string) => void
+    }) => Promise<Pyodide>
     pyodide: Pyodide
   }
 }
@@ -53,7 +57,9 @@ const reactPyModule = {
 
 const python = {
   async init(
-    stdout: (msg: string) => void,
+    stdout: {
+      stdout?: (msg: string) => void
+    },
     onLoad: ({
       id,
       version,
