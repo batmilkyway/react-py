@@ -26,11 +26,7 @@ interface micropip {
 
 declare global {
   interface Window {
-    loadPyodide: ({
-      stdout
-    }: {
-      stdout?: (msg: string) => void
-    }) => Promise<Pyodide>
+    loadPyodide: (stdout: (msg: string) => void) => Promise<Pyodide>
     pyodide: Pyodide
   }
 }
