@@ -108,8 +108,9 @@ sys.stdin.readline = lambda: react_py.getInput("${id}", __prompt_str__)
 
     onLoad({ id, version })
   },
-  async run(code: string) {
-    await self.pyodide.runPythonAsync(code)
+  async run(code: string): Promise<any> {
+    const result = await self.pyodide.runPythonAsync(code)
+    return result
   },
   readFile(name: string) {
     return self.pyodide.FS.readFile(name, { encoding: 'utf8' })
